@@ -17,4 +17,8 @@ class JobProposal extends Model
     {
         return $this->belongsTo(Job::class);
     }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
 }

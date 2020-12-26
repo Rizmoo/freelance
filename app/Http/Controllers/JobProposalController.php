@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\JobProposal;
 use App\User;
 use Illuminate\Http\Request;
@@ -81,7 +82,7 @@ class JobProposalController extends Controller
             $jobProposal -> delivery_file = $url;
         }
         $jobProposal -> delivery_date = now();
-        $jobProposal -> delivery_remarks = $request-> remarks;
+        $jobProposal -> delivery_comments = $request-> remarks;
         $jobProposal -> status = 'delivered';
         $jobProposal -> save();
         return redirect()->back()->with('message','Sent');

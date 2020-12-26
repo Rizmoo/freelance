@@ -57,5 +57,37 @@
                 </div>
             </div>
         </div>
+        <div class="card-body">
+            <h5>Leave a comment</h5>
+            <form method="post" action="{{ route('comment.add') }}">
+                @csrf
+                <div class="form-group">
+                    <input type="text" name="comment" class="form-control" />
+                    <input type="hidden" name="job_proposal_id" value="{{ $jobProposal ->id }}" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;" value="Add Comment" />
+                </div>
+            </form>
+            @foreach($jobProposal -> comments as $comment)
+                <div class="display-comment">
+                    <strong>{{ $comment->user->name }}</strong>
+                    <p>{{ $comment->comment }}</p>
+                    <a href="" id="reply"></a>
+                    <form method="post" action="{{ route('reply.add') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" name="comment" class="form-control" />
+                            <input type="hidden" name="user_id" value="{{  $jobProposal ->job ->user_id }}" />
+                            <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;" value="Reply" />
+                        </div>
+                    </form>
+                    @include('post.partials.replies', ['comments' => $comment->replies])
+                </div>
+            @endforeach
+        </div>
     </div>
 @endsection

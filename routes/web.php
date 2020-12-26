@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
+Route::get('/', 'IndexController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/wallet', 'HomeController@wallet')->name('wallet');
 Route::post('/wallet', 'HomeController@loadWallet')->name('wallet.load');
@@ -31,3 +30,10 @@ Route::post('/job-apply/{job}', 'JobController@applyStore')->name('job.apply.pos
 Route::resource('job','JobController');
 Route::resource('jobProposal','JobProposalController');
 Route::get('/job-proposal-accept/{jobProposal}', 'JobProposalController@acceptProposal')->name('jobProposal.accept');
+
+Route::post('/comment/store', 'CommentController@store')->name('comment.add');
+Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
+
+Route::get('handle-payment', 'PayPalPaymentController@handlePayment')->name('make.payment');
+Route::get('cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
+Route::get('payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');

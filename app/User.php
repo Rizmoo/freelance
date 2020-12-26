@@ -60,4 +60,9 @@ class User extends Authenticatable implements Wallet
 //            return 'client';
 //        }
 //    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
 }
