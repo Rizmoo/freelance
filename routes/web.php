@@ -34,6 +34,10 @@ Route::get('/job-proposal-accept/{jobProposal}', 'JobProposalController@acceptPr
 Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
-Route::get('handle-payment', 'PayPalPaymentController@handlePayment')->name('make.payment');
-Route::get('cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
-Route::get('payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+//Route::get('handle-payment', 'PayPalPaymentController@handlePayment')->name('make.payment');
+//Route::get('cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
+//Route::get('payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+
+Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'PaypalController@payWithPaypal',));
+Route::post('paypal', array('as' => 'paypal','uses' => 'PaypalController@postPaymentWithpaypal',));
+Route::get('paypal', array('as' => 'status','uses' => 'PaypalController@getPaymentStatus',));

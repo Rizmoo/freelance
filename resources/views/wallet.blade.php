@@ -52,7 +52,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('wallet.load') }}" method="post">
+                <form action="{{ route('paypal') }}" method="post">
                 <div class="modal-body">
 
                         @csrf
@@ -63,8 +63,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Load</button>
-                    <a href="{{ route('make.payment') }}" class="btn btn-outline-info">PayPal</a>
+                    <button type="submit" class="btn btn-primary">PayPal</button>>
                 </div>
                 </form>
             </div>
