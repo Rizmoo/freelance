@@ -113,7 +113,8 @@ class JobProposalController extends Controller
 
         $job ->update(['status' => 'closed']);
         $jobProposal ->update(['status' =>'delivered']);
-        $admin ->transfer($jobProposal -> bid, $freelancer);
+        $bal =  $admin->balance;
+        $admin ->transfer($freelancer, $jobProposal -> bid);
 
         return redirect()->back()->with('message','JOb Delivered and Closed');
     }

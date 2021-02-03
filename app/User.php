@@ -7,10 +7,11 @@ use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use willvincent\Rateable\Rateable;
 
 class User extends Authenticatable implements Wallet
 {
-    use Notifiable, HasWallet;
+    use Notifiable, HasWallet, Rateable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,21 +49,27 @@ class User extends Authenticatable implements Wallet
         return $this -> hasMany(JobProposal::class);
     }
 
-//    public function getRoleAttribute()
-//    {
-//        if($this->role_id == 1)
-//        {
-//            return 'admin';
-//        }elseif($this->role_id == 2)
-//        {
-//            return 'freelancer';
-//        }else {
-//            return 'client';
-//        }
-//    }
+    public function getRoleAttribute()
+    {
+        if($this->role_id == 1)
+        {
+            return 'admin';
+        }elseif($this->role_id == 2)
+        {
+            return 'freelancer';
+        }else {
+            return 'client';
+        }
+    }
 
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
+
+    public function activeJobs()
+    {
+        $jobs = Job::where('user_id', $this->id)->where('status','active')->get();
+        return $jobs;
     }
 }

@@ -23,6 +23,9 @@ Route::get('/wallet', 'HomeController@wallet')->name('wallet');
 Route::post('/wallet', 'HomeController@loadWallet')->name('wallet.load');
 Route::post('/wallet-withdraw', 'HomeController@withdrawWallet')->name('wallet.withdraw');
 
+Route::get('/download/{jobProposal}', 'HomeController@download')->name('download');
+Route::get('/down/{job}', 'HomeController@downloadJob')->name('down');
+
 Route::get('/job-apply/{job}', 'JobController@apply')->name('job.apply');
 Route::get('/job-applied', 'JobController@applied')->name('jobs.applied');
 Route::post('/job-apply/{job}', 'JobController@applyStore')->name('job.apply.post');
@@ -30,13 +33,13 @@ Route::post('/job-apply/{job}', 'JobController@applyStore')->name('job.apply.pos
 Route::resource('job','JobController');
 Route::resource('jobProposal','JobProposalController');
 Route::get('/job-proposal-accept/{jobProposal}', 'JobProposalController@acceptProposal')->name('jobProposal.accept');
+Route::post('/job-accept-delivery/{jobProposal}', 'JobProposalController@acceptResult')->name('accept.delivery');
 
 Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
-//Route::get('handle-payment', 'PayPalPaymentController@handlePayment')->name('make.payment');
-//Route::get('cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
-//Route::get('payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+
+
 
 Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'PaypalController@payWithPaypal',));
 Route::post('paypal', array('as' => 'paypal','uses' => 'PaypalController@postPaymentWithpaypal',));

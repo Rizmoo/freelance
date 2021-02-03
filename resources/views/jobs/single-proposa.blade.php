@@ -40,18 +40,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Delivery</h2>
-                        </div>
-                        <div class="col-md-12">
-                            <p class="text-muted mb-2">
-                                {{ $jobProposal -> proposal_text }}
-                            </p>
-                        </div>
 
-                        <a href="#" class="btn btn-outline-warning"><i class="fa fa-download"></i>Download File</a>
-                    </div>
+                    @if(Auth::user()->role == 'client')
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Delivery</h2>
+                                <form method="post" action="{{ route('accept.delivery', $jobProposal) }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="hidden" name="job_proposal_id" value="{{ $jobProposal ->id }}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-sm btn-outline-success py-0" style="font-size: 0.8em;" value="Accept" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-muted mb-2">
+                                    {{ $jobProposal -> delivery_comments }}
+                                </p>
+                            </div>
+
+                            <a href="{{route('download', $jobProposal )}}" class="btn btn-outline-warning"><i class="fa fa-download"></i>Download File</a>
+                        </div>
+                    @endif
+
 
 
                 </div>
@@ -69,23 +82,11 @@
                     <input type="submit" class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;" value="Add Comment" />
                 </div>
             </form>
-            @foreach($jobProposal -> comments as $comment)
+            @foreach($jobProposal -> comments -> reverse() as $comment)
                 <div class="display-comment">
                     <strong>{{ $comment->user->name }}</strong>
                     <p>{{ $comment->comment }}</p>
-                    <a href="" id="reply"></a>
-                    <form method="post" action="{{ route('reply.add') }}">
-                        @csrf
-                        <div class="form-group">
-                            <input type="text" name="comment" class="form-control" />
-                            <input type="hidden" name="user_id" value="{{  $jobProposal ->job ->user_id }}" />
-                            <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;" value="Reply" />
-                        </div>
-                    </form>
-                    @include('post.partials.replies', ['comments' => $comment->replies])
+
                 </div>
             @endforeach
         </div>

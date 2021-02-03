@@ -26,8 +26,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-4">
-                                <h5>Start Date</h5>
-                                <p>{{ $job -> start_date }}</p>
+                                <h5>File</h5>
+                                <a href="{{route('down', $job )}}" class="btn btn-outline-warning"><i class="fa fa-download"></i>Download File</a>
                             </div>
                         </div>
                         <div class="col-md-4">

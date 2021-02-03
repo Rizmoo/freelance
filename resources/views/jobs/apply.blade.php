@@ -28,12 +28,6 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Delivery date</label>
-                                        <input type="date" name="delivery_date" class="form-control">
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Proposal</label>

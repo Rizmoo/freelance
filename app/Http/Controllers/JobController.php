@@ -76,7 +76,6 @@ class JobController extends Controller
             }
 
 
-
             $User = Auth::user();
             $User->jobs()->save($job);
             $request->session()->flash('status','The Job has been created successfully');
@@ -84,7 +83,6 @@ class JobController extends Controller
             /*transfer Budget To Admin*/
 
             $admin = User::where('role_id', 1)->first();
-            $admin -> balance;
             $User->transfer($admin, $request->budget);
             DB::commit();
             return redirect()->route('job.index');
@@ -115,7 +113,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return  view('jobs.edit', compact('job'));
     }
 
     /**
@@ -127,18 +125,58 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'delivery_date' => 'required|date',
+            'budget' => 'numeric|required',
+            'file' => 'nullable|file',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $job=new Job;
+            $job->title=$request->title;
+            $job->description=$request->description;
+            $job->budget=$request->budget;
+            $job->delivery_date= Carbon::create($request->delivery_date) ;
+
+            if ($request->hasFile('file'))
+            {
+                $url=$request->file('file')->store('files');
+                $job -> file = $url;
+            }
+
+
+            $User = Auth::user();
+            $User->jobs()->save($job);
+            $request->session()->flash('status','The Job has been Updated successfully');
+
+            DB::commit();
+            return redirect()->route('job.index');
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            return redirect()->back()->with('message',$exception->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Job  $job
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Job $job)
     {
-        //
+
+        try {
+            $job->delete();
+            return  redirect()->back()->with('message','Deleted');
+        } catch (\Exception $e) {
+            return  redirect()->back()->with('error','Could Not delete');
+        }
+
     }
 
     public function apply(Job $job)

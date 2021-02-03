@@ -52,7 +52,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('paypal') }}" method="post">
+{{--                <form action="{{ route('paypal') }}" method="post">--}}
+                <form action="{{ route('wallet') }}" method="post">
                 <div class="modal-body">
 
                         @csrf
@@ -63,7 +64,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">PayPal</button>>
+                    <button type="submit" class="btn btn-primary">PayPal</button>
+                    <button type="submit" class="btn btn-primary">Deposit (Test)</button>
                 </div>
                 </form>
             </div>

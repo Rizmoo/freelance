@@ -54,15 +54,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Hired at</label>
-                                        <input type="date"  value="{{ old('hired_at') }}" name="hired_at" class="form-control">
-                                        @error('hire_at')
-                                        <span class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Budget</label>
